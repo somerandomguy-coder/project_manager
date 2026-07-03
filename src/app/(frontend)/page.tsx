@@ -75,7 +75,7 @@ export default async function HomePage() {
       <header className="catalog-header">
         <div className="header-info">
           <div className="header-title-container">
-            <Image
+            <img
               src="/logo.png"
               alt="Nam Le Logo"
               width={56}
