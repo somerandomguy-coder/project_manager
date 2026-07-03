@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     projects: Project;
+    visits: Visit;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    visits: VisitsSelect<false> | VisitsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -222,6 +224,31 @@ export interface Project {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "visits".
+ */
+export interface Visit {
+  id: number;
+  /**
+   * IP Address of the visitor.
+   */
+  ipAddress?: string | null;
+  /**
+   * User Agent string (device & browser details).
+   */
+  userAgent?: string | null;
+  /**
+   * HTTP Referer (where they came from).
+   */
+  referrer?: string | null;
+  /**
+   * The active curator category filter at the time of the visit.
+   */
+  filterActive?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -255,6 +282,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'projects';
         value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'visits';
+        value: number | Visit;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -354,6 +385,18 @@ export interface ProjectsSelect<T extends boolean = true> {
   recognition?: T;
   tags?: T;
   notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "visits_select".
+ */
+export interface VisitsSelect<T extends boolean = true> {
+  ipAddress?: T;
+  userAgent?: T;
+  referrer?: T;
+  filterActive?: T;
   updatedAt?: T;
   createdAt?: T;
 }

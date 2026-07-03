@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import './styles.css'
 import Image from 'next/image'
+import { headers } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
 
@@ -36,6 +37,25 @@ export default async function HomePage() {
   })
 
   const activeFilter = settings?.filterCategory || 'all'
+
+  // Log the visit inside the database
+  const headerList = await headers()
+  const userAgent = headerList.get('user-agent') || 'Unknown'
+  const referrer = headerList.get('referer') || 'Direct'
+  const rawIp = headerList.get('fly-client-ip') || headerList.get('x-forwarded-for') || '127.0.0.1'
+  const ipAddress = rawIp.split(',')[0].trim()
+
+  payload.create({
+    collection: 'visits',
+    data: {
+      ipAddress,
+      userAgent,
+      referrer,
+      filterActive: activeFilter,
+    },
+  }).catch((err) => {
+    console.error('Failed to log page visit:', err)
+  })
 
   // Query projects based on category filter
   const whereClause: any = {

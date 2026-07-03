@@ -8,6 +8,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
+import { Visits } from './collections/Visits'
 import { Settings } from './globals/Settings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -20,7 +21,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Projects],
+  collections: [Users, Media, Projects, Visits],
   globals: [Settings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
