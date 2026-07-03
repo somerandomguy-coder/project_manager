@@ -2,8 +2,11 @@ import React from 'react'
 import './styles.css'
 
 export const metadata = {
-  description: 'Simple self-hosted project catalog managed from Payload admin.',
-  title: 'Project Catalog CMS',
+  description: 'Portfolio of Nam Le - High-performance Machine Learning Systems and Core Backend Engineer.',
+  title: 'Nam Le | Portfolio Catalog',
+  icons: {
+    icon: '/logo.png',
+  },
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

@@ -206,6 +206,10 @@ export interface Project {
    */
   description?: string | null;
   /**
+   * Awards, hackathons, showcases, or special highlights (example: UTS FEIT AI Showcase 2026).
+   */
+  recognition?: string | null;
+  /**
    * Comma-separated list of technologies used (example: React, Next.js, SQLite).
    */
   tags?: string | null;
@@ -347,6 +351,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   sortOrder?: T;
   thumbnail?: T;
   description?: T;
+  recognition?: T;
   tags?: T;
   notes?: T;
   updatedAt?: T;

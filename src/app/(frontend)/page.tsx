@@ -73,9 +73,20 @@ export default async function HomePage() {
   return (
     <div className="catalog">
       <header className="catalog-header">
-        <div>
-          <p className="eyebrow">Portfolio Catalog</p>
-          <h1>Nam Le</h1>
+        <div className="header-info">
+          <div className="header-title-container">
+            <Image
+              src="/logo.png"
+              alt="Nam Le Logo"
+              width={56}
+              height={56}
+              className="header-logo"
+            />
+            <div>
+              <p className="eyebrow">Portfolio Catalog</p>
+              <h1>Nam Le</h1>
+            </div>
+          </div>
           <p className="subtitle">
             {activeFilter !== 'all' ? (
               <span>
@@ -130,6 +141,12 @@ export default async function HomePage() {
                 <div className="card-header">
                   <h2>{project.name}</h2>
                 </div>
+
+                {project.recognition && (
+                  <div className="recognition-badge-card">
+                    <span className="trophy-icon">🏆</span> {project.recognition}
+                  </div>
+                )}
 
                 <p className="description">
                   {project.description || project.notes || 'No description provided.'}

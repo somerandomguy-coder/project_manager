@@ -115,6 +115,13 @@ export const Projects: CollectionConfig = {
       },
     },
     {
+      name: 'recognition',
+      type: 'text',
+      admin: {
+        description: 'Awards, hackathons, showcases, or special highlights (example: UTS FEIT AI Showcase 2026).',
+      },
+    },
+    {
       name: 'tags',
       type: 'text',
       admin: {
