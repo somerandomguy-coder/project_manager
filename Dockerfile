@@ -10,7 +10,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* pnpm-workspace.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -68,4 +68,4 @@ ENV PORT 3000
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+CMD ["sh", "-c", "mkdir -p /data/media && if [ -d /app/public/media ] && [ \"$(ls -A /app/public/media 2>/dev/null)\" ]; then cp -rn /app/public/media/* /data/media/ 2>/dev/null || true; fi && rm -rf /app/public/media && ln -s /data/media /app/public/media && HOSTNAME=\"0.0.0.0\" node server.js"]

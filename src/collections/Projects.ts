@@ -4,7 +4,7 @@ export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'url', 'isActive', 'sortOrder', 'updatedAt'],
+    defaultColumns: ['name', 'category', 'url', 'isActive', 'sortOrder', 'updatedAt'],
   },
   access: {
     read: () => true,
@@ -22,9 +22,9 @@ export const Projects: CollectionConfig = {
     {
       name: 'url',
       type: 'text',
-      required: true,
+      required: false,
       validate: (value) => {
-        if (!value) return 'Project URL is required.'
+        if (!value) return true
 
         try {
           const parsed = new URL(String(value))
@@ -37,7 +37,46 @@ export const Projects: CollectionConfig = {
       },
       admin: {
         position: 'sidebar',
-        description: 'Live hosting URL for this project.',
+        description: 'Live hosting URL for this project (optional).',
+      },
+    },
+    {
+      name: 'githubUrl',
+      type: 'text',
+      required: false,
+      validate: (value) => {
+        if (!value) return true
+
+        try {
+          const parsed = new URL(String(value))
+          return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+            ? true
+            : 'URL must start with http:// or https://.'
+        } catch {
+          return 'Please enter a valid URL (example: https://github.com/username/repo).'
+        }
+      },
+      admin: {
+        position: 'sidebar',
+        description: 'GitHub repository URL (optional).',
+      },
+    },
+    {
+      name: 'category',
+      type: 'select',
+      defaultValue: 'Other',
+      required: true,
+      options: [
+        { label: 'AI', value: 'AI' },
+        { label: 'MLOps', value: 'MLOps' },
+        { label: 'Backend', value: 'Backend' },
+        { label: 'Tools', value: 'Tools' },
+        { label: 'Frontend', value: 'Frontend' },
+        { label: 'Other', value: 'Other' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Category for dynamic filtering.',
       },
     },
     {
@@ -63,16 +102,30 @@ export const Projects: CollectionConfig = {
       name: 'thumbnail',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
       admin: {
-        description: 'Project thumbnail image, similar to a product card image.',
+        description: 'Project thumbnail image (optional).',
+      },
+    },
+    {
+      name: 'description',
+      type: 'textarea',
+      admin: {
+        description: 'Short public description of the project (optional).',
+      },
+    },
+    {
+      name: 'tags',
+      type: 'text',
+      admin: {
+        description: 'Comma-separated list of technologies used (example: React, Next.js, SQLite).',
       },
     },
     {
       name: 'notes',
       type: 'textarea',
       admin: {
-        description: 'Optional short internal/public note shown under the project title.',
+        description: 'Optional short internal note (backward compatibility).',
       },
     },
   ],

@@ -89,8 +89,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    settings: Setting;
+  };
+  globalsSelect: {
+    settings: SettingsSelect<false> | SettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -174,9 +178,17 @@ export interface Project {
    */
   name: string;
   /**
-   * Live hosting URL for this project.
+   * Live hosting URL for this project (optional).
    */
-  url: string;
+  url?: string | null;
+  /**
+   * GitHub repository URL (optional).
+   */
+  githubUrl?: string | null;
+  /**
+   * Category for dynamic filtering.
+   */
+  category: 'AI' | 'MLOps' | 'Backend' | 'Tools' | 'Frontend' | 'Other';
   /**
    * Toggle this on/off to show or hide project from the public list.
    */
@@ -186,11 +198,19 @@ export interface Project {
    */
   sortOrder?: number | null;
   /**
-   * Project thumbnail image, similar to a product card image.
+   * Project thumbnail image (optional).
    */
-  thumbnail: number | Media;
+  thumbnail?: (number | null) | Media;
   /**
-   * Optional short internal/public note shown under the project title.
+   * Short public description of the project (optional).
+   */
+  description?: string | null;
+  /**
+   * Comma-separated list of technologies used (example: React, Next.js, SQLite).
+   */
+  tags?: string | null;
+  /**
+   * Optional short internal note (backward compatibility).
    */
   notes?: string | null;
   updatedAt: string;
@@ -321,9 +341,13 @@ export interface MediaSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   url?: T;
+  githubUrl?: T;
+  category?: T;
   isActive?: T;
   sortOrder?: T;
   thumbnail?: T;
+  description?: T;
+  tags?: T;
   notes?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -367,6 +391,29 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings".
+ */
+export interface Setting {
+  id: number;
+  /**
+   * Filter what category of projects is visible to visitors on the frontend. Choose "Show All Categories" to show everything.
+   */
+  filterCategory: 'all' | 'AI' | 'MLOps' | 'Backend' | 'Tools' | 'Frontend' | 'Other';
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "settings_select".
+ */
+export interface SettingsSelect<T extends boolean = true> {
+  filterCategory?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

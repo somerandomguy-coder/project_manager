@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.env
+.env.local
+*.db
+data/*.db
+public/media/*
+!public/media/.gitkeep
+playwright-report
+test-results
