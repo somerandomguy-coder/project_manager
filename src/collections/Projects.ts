@@ -23,7 +23,7 @@ export const Projects: CollectionConfig = {
       name: 'url',
       type: 'text',
       required: false,
-      validate: (value) => {
+      validate: (value: any) => {
         if (!value) return true
 
         try {
@@ -44,7 +44,7 @@ export const Projects: CollectionConfig = {
       name: 'githubUrl',
       type: 'text',
       required: false,
-      validate: (value) => {
+      validate: (value: any) => {
         if (!value) return true
 
         try {
