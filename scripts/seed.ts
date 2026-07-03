@@ -110,7 +110,7 @@ async function run() {
   for (const proj of mockProjects) {
     await payload.create({
       collection: 'projects',
-      data: proj,
+      data: proj as any,
     })
     console.log(`Created project: ${proj.name}`)
   }
